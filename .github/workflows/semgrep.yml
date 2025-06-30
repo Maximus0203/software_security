@@ -1,0 +1,20 @@
+name: Semgrep Scan
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  semgrep:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Run Semgrep
+      uses: returntocorp/semgrep-action@v1
+      with:
+        config: ./semgrep_rules/auth_flaws.yml
+        strict: true  # sorgt dafür, dass der Build bei Findings fehlschlägt

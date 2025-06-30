@@ -1,0 +1,21 @@
+rules:
+  - id: hardcoded-password
+    pattern: $VAR = "password"
+    message: "Hardcoded password detected"
+    severity: ERROR
+    languages: [python]
+
+  - id: plaintext-password-comparison
+    patterns:
+      - pattern-either:
+          - pattern: password == $ANY
+          - pattern: $ANY == password
+    message: "Plaintext password comparison detected — missing hashing"
+    severity: WARNING
+    languages: [python]
+
+  - id: session-in-url
+    pattern: return f"...?session=$VAL"
+    message: "Session ID should not be passed via URL"
+    severity: WARNING
+    languages: [python]
